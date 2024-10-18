@@ -20,7 +20,7 @@ class Program
         var companias = await ObtenerCompanias();
 
         // Construir la lista de entidades organizadas en jerarquía
-        List<EntidadCompania> entidadesCompania = ConstruirJerarquia(companias);
+        List<EntidadCompania> entidadesCompania = await ConstruirJerarquia(companias);
 
         // Imprimir la jerarquía resultante
         foreach (var entidad in entidadesCompania)
@@ -59,15 +59,66 @@ class Program
         return companias;
     }
 
+    // Método para obtener los detalles de una compañía por su sys_id
+    public static async Task<Compania> ObtenerCompaniaPorSysId(string sysId)
+    {
+        Compania compania = null;
+
+        using (HttpClient client = new HttpClient())
+        {
+            // Autenticación básica
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+            // Realizar la solicitud HTTP GET para obtener los detalles de la compañía por sys_id
+            HttpResponseMessage response = await client.GetAsync($"{instanceUrl}{apiUrl}/{sysId}");
+
+            // Verificar si la respuesta fue exitosa
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                compania = JsonConvert.DeserializeObject<Compania>(jsonResponse);
+            }
+            else
+            {
+                Console.WriteLine($"Error al obtener compañía por sys_id {sysId}: {response.StatusCode}");
+            }
+        }
+
+        return compania;
+    }
+
     // Método para construir la jerarquía de entidades
-    public static List<EntidadCompania> ConstruirJerarquia(List<Compania> companias)
+    public static async Task<List<EntidadCompania>> ConstruirJerarquia(List<Compania> companias)
     {
         List<EntidadCompania> entidades = new List<EntidadCompania>();
 
         foreach (var compania in companias)
         {
-            // Buscar la entidad padre en la jerarquía
-            var entidadPadre = entidades.FirstOrDefault(e => e.Nombre == compania.parent);
+            // Buscar la entidad padre en la jerarquía si el parent no es nulo
+            EntidadCompania entidadPadre = null;
+
+            if (compania.parent != null && !string.IsNullOrEmpty(compania.parent.value))
+            {
+                // Obtener detalles del padre desde la API utilizando el sys_id
+                var companiaPadre = await ObtenerCompaniaPorSysId(compania.parent.value);
+
+                if (companiaPadre != null)
+                {
+                    // Buscar la entidad padre en la lista de entidades
+                    entidadPadre = entidades.FirstOrDefault(e => e.Nombre == companiaPadre.name);
+                    if (entidadPadre == null)
+                    {
+                        // Si no existe, crear una nueva entidad padre y agregarla a la lista
+                        entidadPadre = new EntidadCompania
+                        {
+                            Nombre = companiaPadre.name,
+                            Tipo = companiaPadre.u_tipo_de_compania
+                        };
+                        entidades.Add(entidadPadre);
+                    }
+                }
+            }
 
             // Crear una nueva entidad de compañía
             var nuevaEntidad = new EntidadCompania
@@ -78,7 +129,7 @@ class Program
 
             if (entidadPadre != null)
             {
-                // Si existe un padre, agregamos esta entidad como hijo
+                // Si existe un padre, agregar esta entidad como hijo
                 entidadPadre.AgregarHijo(nuevaEntidad);
             }
             else
@@ -103,7 +154,14 @@ public class Compania
 {
     public string name { get; set; }
     public string u_tipo_de_compania { get; set; }
-    public string parent { get; set; }
+    public Parent parent { get; set; } // El atributo parent es un objeto que contiene link y value
+}
+
+// Clase para representar el objeto Parent
+public class Parent
+{
+    public string link { get; set; }   // Enlace a los detalles del padre
+    public string value { get; set; }  // sys_id del padre
 }
 
 // Clase para manejar la jerarquía de entidades (Unidad de Negocio, Sociedad, Sub Unidad de Negocio, División de Personal)
