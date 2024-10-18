@@ -28,7 +28,36 @@ class Program
             Console.WriteLine(entidad.ToString());
         }
     }
+// Método para obtener una sola compañía por nombre
+    public static async Task<Compania> ObtenerCompaniaPorNombre(string nombreCompania)
+    {
+        Compania compania = null;
 
+        using (HttpClient client = new HttpClient())
+        {
+            // Autenticación básica
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+            // Realizar la solicitud HTTP GET con el filtro por nombre
+            HttpResponseMessage response = await client.GetAsync($"{instanceUrl}{apiUrl}?sysparm_query=name={nombreCompania}&sysparm_limit=1");
+
+            // Verificar si la respuesta fue exitosa
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ServiceNowResponse>(jsonResponse);
+                // Extraer la primera compañía del array result
+                compania = result.result.FirstOrDefault();
+            }
+            else
+            {
+                Console.WriteLine($"Error al obtener compañía por nombre {nombreCompania}: {response.StatusCode}");
+            }
+        }
+
+        return compania;
+    }
     // Método para obtener las compañías desde la API
     public static async Task<List<Compania>> ObtenerCompanias()
     {
