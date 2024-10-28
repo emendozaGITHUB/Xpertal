@@ -5,11 +5,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Ruta del archivo XML generado por csexport.exe
+        // Ruta del archivo XML
         string filePath = @"C:\Exports\MIMMA_Export.xml";
 
-        // EmployeeID que queremos buscar
-        string employeeIDBuscado = "12345"; // Cambia por el valor que quieres buscar
+        // El valor de cs-dn que queremos buscar
+        string csDnBuscado = "5325857"; // Cambia por el valor que quieres buscar
 
         try
         {
@@ -17,32 +17,26 @@ class Program
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filePath);
 
-            // XPath para buscar un elemento con el atributo employeeID
-            string xpath = $"//Object[@employeeID='{employeeIDBuscado}']";
+            // XPath para buscar un cs-object que tenga el atributo cs-dn igual al valor buscado
+            string xpath = $"//cs-object[@cs-dn='{csDnBuscado}']";
 
-            // Buscar el nodo que coincida con el employeeID
-            XmlNode employeeNode = xmlDoc.SelectSingleNode(xpath);
+            // Buscar el nodo que coincida con el cs-dn
+            XmlNode csObjectNode = xmlDoc.SelectSingleNode(xpath);
 
-            if (employeeNode != null)
+            if (csObjectNode != null)
             {
-                Console.WriteLine($"El objeto con EmployeeID '{employeeIDBuscado}' ha sido encontrado.");
+                Console.WriteLine($"El objeto con cs-dn '{csDnBuscado}' ha sido encontrado.");
 
-                // Aquí puedes hacer más validaciones o trabajar con los atributos del objeto
-                // Por ejemplo, puedes verificar si tiene un atributo "connected" o alguna marca de conexión.
-                string connectedStatus = employeeNode.Attributes["connected"]?.Value ?? "No especificado";
+                // Obtener otros atributos del nodo si es necesario
+                string id = csObjectNode.Attributes["id"]?.Value ?? "No especificado";
+                string objectType = csObjectNode.Attributes["object-type"]?.Value ?? "No especificado";
 
-                if (connectedStatus == "true")
-                {
-                    Console.WriteLine($"El objeto con EmployeeID '{employeeIDBuscado}' está conectado.");
-                }
-                else
-                {
-                    Console.WriteLine($"El objeto con EmployeeID '{employeeIDBuscado}' no está conectado.");
-                }
+                Console.WriteLine($"ID: {id}");
+                Console.WriteLine($"Tipo de Objeto: {objectType}");
             }
             else
             {
-                Console.WriteLine($"El objeto con EmployeeID '{employeeIDBuscado}' no fue encontrado en el archivo XML.");
+                Console.WriteLine($"El objeto con cs-dn '{csDnBuscado}' no fue encontrado en el archivo XML.");
             }
         }
         catch (Exception ex)
