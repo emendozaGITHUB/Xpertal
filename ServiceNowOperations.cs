@@ -13,36 +13,6 @@ class Program
     private static readonly string apiUrl = "/api/now/table/core_company";
     private static readonly string username = "your_username";  // Coloca aquí tu usuario de ServiceNow
     private static readonly string password = "your_password";  // Coloca aquí tu contraseña de ServiceNow
-// Supongamos que user es un diccionario o un objeto que contiene los valores de usuario
-        var user = new Dictionary<string, dynamic>
-        {
-            { "first_name", new { Value = "John" } },
-            { "last_name", new { Value = "Doe" } },
-            { "email", new { Value = (string)null } } // Aquí el email es nulo
-        };
-
-        // Crear un objeto dinámico para agregar los valores condicionalmente
-        dynamic updateUser = new ExpandoObject();
-        var updateUserDict = (IDictionary<string, object>)updateUser;
-
-        // Agregar solo si los valores no son nulos
-        if (user["first_name"].Value != null)
-        {
-            updateUserDict["first_name"] = user["first_name"].Value;
-        }
-
-        if (user["last_name"].Value != null)
-        {
-            updateUserDict["last_name"] = user["last_name"].Value;
-        }
-
-        if (user["email"].Value != null)
-        {
-            updateUserDict["email"] = user["email"].Value;
-        }
-
-        // Serializar el objeto dinámico a JSON
-        string jsonData = JsonConvert.SerializeObject(updateUser, Formatting.Indented);
 
     static async Task Main(string[] args)
     {
