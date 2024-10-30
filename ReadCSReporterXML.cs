@@ -6,10 +6,10 @@ class Program
     static void Main(string[] args)
     {
         // Ruta del archivo XML
-        string filePath = @"C:\Exports\MIMMA_Export.xml";
+        string filePath = @"C:\Exports\MIMMA_Export.xml"; // Cambia la ruta a tu archivo XML
 
-        // El valor de cs-dn que queremos buscar
-        string csDnBuscado = "5325857"; // Cambia por el valor que quieres buscar
+        // El valor de inicio de dn que queremos buscar
+        string dnStartWith = "5325"; // Cambia por el valor con el que deseas que comience
 
         try
         {
@@ -17,26 +17,34 @@ class Program
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filePath);
 
-            // XPath para buscar un cs-object que tenga el atributo cs-dn igual al valor buscado
-            string xpath = $"//cs-object[@cs-dn='{csDnBuscado}']";
+            // Definir el namespace del documento
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+            nsmgr.AddNamespace("ns", "http://www.microsoft.com/mms/mmsml/v2");
 
-            // Buscar el nodo que coincida con el cs-dn
-            XmlNode csObjectNode = xmlDoc.SelectSingleNode(xpath);
+            // XPath para buscar nodos delta cuyo atributo dn comience con el valor especificado
+            string xpath = $"//ns:delta[starts-with(@dn, '{dnStartWith}')]";
 
-            if (csObjectNode != null)
+            // Buscar los nodos que coincidan con el criterio
+            XmlNodeList deltaNodes = xmlDoc.SelectNodes(xpath, nsmgr);
+
+            if (deltaNodes != null && deltaNodes.Count > 0)
             {
-                Console.WriteLine($"El objeto con cs-dn '{csDnBuscado}' ha sido encontrado.");
+                Console.WriteLine($"Se encontraron {deltaNodes.Count} objetos que comienzan con 'dn' = '{dnStartWith}'.");
 
-                // Obtener otros atributos del nodo si es necesario
-                string id = csObjectNode.Attributes["id"]?.Value ?? "No especificado";
-                string objectType = csObjectNode.Attributes["object-type"]?.Value ?? "No especificado";
+                // Recorrer los nodos encontrados
+                foreach (XmlNode node in deltaNodes)
+                {
+                    string dn = node.Attributes["dn"]?.Value ?? "No especificado";
+                    string primaryObjectClass = node["primary-objectclass"]?.InnerText ?? "No especificado";
+                    Console.WriteLine($"DN: {dn}");
+                    Console.WriteLine($"Primary Object Class: {primaryObjectClass}");
 
-                Console.WriteLine($"ID: {id}");
-                Console.WriteLine($"Tipo de Objeto: {objectType}");
+                    // Puedes acceder a otros atributos del nodo delta si es necesario
+                }
             }
             else
             {
-                Console.WriteLine($"El objeto con cs-dn '{csDnBuscado}' no fue encontrado en el archivo XML.");
+                Console.WriteLine($"No se encontraron objetos cuyo 'dn' comience con '{dnStartWith}' en el archivo XML.");
             }
         }
         catch (Exception ex)
