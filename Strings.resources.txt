@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+ </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+ <!-- Customizations begin here -->
+  <data name="OTPEmailRegistraionEmailTextboxLabel" xml:space="preserve">
+    <value>Dirección de correo electrónico:</value>
+</data>
+<data name="OTPEmailRegistrationEmailRequiredErrorMessage" xml:space="preserve">
+    <value>El campo de dirección de correo electrónico no puede estar vacío.</value>
+</data>
+<data name="OTPEmailRegistrationFooterReadOnly" xml:space="preserve">
+    <value>Para actualizar su dirección de correo electrónico, siga el proceso definido por su organización o llame a su mesa de ayuda.</value>
+</data>
+<data name="OTPEmailRegistrationFooterReadWrite" xml:space="preserve">
+    <value>La dirección de correo electrónico está almacenada por su organización en Forefront Identity Manager.</value>
+</data>
+<data name="OTPEmailRegistrationGateTitle" xml:space="preserve">
+    <value>Verificación de Dirección de Correo Electrónico</value>
+</data>
+<data name="OTPEmailRegistrationHeaderReadOnly" xml:space="preserve">
+    <value>Si alguna vez necesita restablecer su contraseña, se enviará un código de verificación a su correo electrónico. Si la dirección de correo electrónico mostrada a continuación no es correcta, deberá actualizarla para usar el restablecimiento de contraseña de autoservicio.</value>
+</data>
+<data name="OTPEmailRegistrationHeaderReadWrite" xml:space="preserve">
+    <value>Ingrese su dirección de correo electrónico a continuación. Si alguna vez necesita restablecer su contraseña, se enviará un código de verificación a su correo electrónico.</value>
+</data>
+<data name="OTPEmailResetGateTitle" xml:space="preserve">
+    <value>Verifique su identidad: Correo Electrónico</value>
+</data>
+<data name="OTPEmailResetHeader" xml:space="preserve">
+    <value>Ingrese su código de seguridad a continuación. Se ha enviado un código de seguridad a la dirección de correo electrónico registrada con esta organización.</value>
+</data>
+<data name="OTPRegularExpressionErrorMessage" xml:space="preserve">
+    <value>El valor especificado no coincide con el formato esperado.</value>
+</data>
+<data name="OTPResetOneTimePasswordRequiredErrorMessage" xml:space="preserve">
+    <value>El campo del código de seguridad no puede estar vacío.</value>
+</data>
+<data name="OTPResetVerificationLabel" xml:space="preserve">
+    <value>Código de seguridad:</value>
+</data>
+<data name="OTPSmsRegistrationFooterReadOnly" xml:space="preserve">
+    <value>Para actualizar su número de teléfono móvil, siga el proceso definido por su organización o llame a su mesa de ayuda.</value>
+</data>
+<data name="OTPSmsRegistrationFooterReadWrite" xml:space="preserve">
+    <value>El número de teléfono móvil está almacenado por su organización en Forefront Identity Manager.</value>
+</data>
+<data name="OTPSmsRegistrationGateTitle" xml:space="preserve">
+    <value>Verificación de Teléfono Móvil</value>
+</data>
+<data name="OTPSmsRegistrationHeaderReadOnly" xml:space="preserve">
+    <value>Si alguna vez necesita restablecer su contraseña, se enviará un código de verificación a su teléfono móvil. Si el número de teléfono móvil que se muestra a continuación no es correcto, deberá actualizarlo para usar el restablecimiento de contraseña de autoservicio.</value>
+</data>
+<data name="OTPSmsRegistrationHeaderReadWrite" xml:space="preserve">
+    <value>Ingrese su número de teléfono móvil a continuación. Si alguna vez necesita restablecer su contraseña, se enviará un código de verificación a su teléfono móvil.</value>
+</data>
+<data name="OTPSmsRegistrationMobilePhoneRequiredErrorMessage" xml:space="preserve">
+    <value>El campo del número de teléfono móvil no puede estar vacío.</value>
+</data>
+<data name="OTPSmsRegistrationSMSTextBoxLabel" xml:space="preserve">
+    <value>Teléfono Móvil:</value>
+</data>
+<data name="OTPSmsResetGateTitle" xml:space="preserve">
+    <value>Verifique su identidad: Teléfono Móvil</value>
+</data>
+<data name="OTPSmsResetHeader" xml:space="preserve">
+    <value>Ingrese su código de seguridad a continuación. Se ha enviado un código de seguridad al teléfono móvil registrado con esta organización.</value>
+</data>
+<data name="PasswordGateDescriptionText" xml:space="preserve">
+    <value>Ingrese su contraseña actual a continuación y luego haga clic en 'Siguiente'.</value>
+</data>
+<data name="PasswordGateErrorMessagePasswordRequired" xml:space="preserve">
+    <value>Ingrese su contraseña actual.</value>
+</data>
+<data name="PasswordGateGateTitle" xml:space="preserve">
+    <value>Su Contraseña Actual</value>
+</data>
+<data name="PasswordGatePasswordLabelText" xml:space="preserve">
+    <value>Contraseña:</value>
+</data>
+<data name="PasswordGateUsernameTextFormat" xml:space="preserve">
+    <value>&lt;i&gt; (conectado como: &lt;b&gt;{0}&lt;/b&gt;) &lt;/i&gt;</value>
+</data>
+<data name="QAGateErrorNotEnoughQuestionsAnswered" xml:space="preserve">
+    <value>Debe responder al menos {0} preguntas.</value>
+</data>
+<data name="QAGateIncorrectAnswer" xml:space="preserve">
+    <value>Sus respuestas no son correctas.</value>
+</data>
+<data name="QAGatePrivacyNotice" xml:space="preserve">
+    <value>Las respuestas que proporcione son almacenadas por su organización en Forefront Identity Manager.</value>
+</data>
+<data name="QAGateRegistrationNumberOfQuestionsExplanation_Format" xml:space="preserve">
+    <value>Debe responder al menos {0} preguntas para registrarse.</value>
+</data>
+<data name="QAGateRegistrationOneOrMoreAnswersFailedValidation" xml:space="preserve">
+    <value>Una o más respuestas no cumplen con la política.</value>
+</data>
+<data name="QAGateRegistrationThisAnswerValidationFailed" xml:space="preserve">
+    <value>Esta respuesta no cumple con la política.</value>
+</data>
+<data name="QAGateRegistrationTitle" xml:space="preserve">
+    <value>Registre sus respuestas</value>
+</data>
+<data name="QAGateResetNumberOfQuestionsExplanation_Format" xml:space="preserve">
+    <value>Debe responder {0} de las siguientes {1} preguntas.</value>
+</data>
+<data name="QAGateResetTitle" xml:space="preserve">
+    <value>Verifique su identidad: Envíe sus respuestas</value>
+</data>
+
+</root>
